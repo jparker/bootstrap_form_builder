@@ -25,7 +25,7 @@ select tag. This can be used to decorate the input fields.
     <div class="input-append">
       <%= input_tag %>
       <label class="add-on">
-        <%= f.check_box :taxable
+        <%= f.check_box :taxable %>
         <span>Sales tax</span>
       </label>
     </div>
