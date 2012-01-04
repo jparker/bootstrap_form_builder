@@ -4,6 +4,33 @@ A Rails form builder that outputs forms structured for use with the
 Twitter Bootstrap library. Labels are automatically created, and errors
 are displayed inline.
 
+= Usage
+
+The builder conforms generally to the generic Rails form builder API.
+
+  <%= bootstrap_form_for @widget do |f| %>
+    <%= f.text_field :name %>
+    <%= f.collection_select :category_id, Category.all, :id, :name, include_blank: true %>
+    <%= f.commit class: 'primary' %>
+  <% end %>
+
+Labels are automatically created for the field. The label and the input
+are wrapped inside of divs classed according to Twitter Bootstrap library's
+conventions.
+
+The field helpers also accept a block to which it yields the input or
+select tag. This can be used to decorate the input fields.
+
+  <%= f.text_field :price do |input_tag| %>
+    <div class="input-append">
+      <%= input_tag %>
+      <label class="add-on">
+        <%= f.check_box :taxable
+        <span>Sales tax</span>
+      </label>
+    </div>
+  <% end %>
+
 = More information
 
 http://twitter.github.com/bootstrap
