@@ -12,7 +12,7 @@ class BootstrapFormBuilderTest < ActiveSupport::TestCase
     extend ActiveModel::Naming
     include ActiveModel::Conversion
 
-    attr_accessor :title
+    attr_accessor :author_id, :title
 
     def persisted?() end
   end
@@ -22,18 +22,35 @@ class BootstrapFormBuilderTest < ActiveSupport::TestCase
   setup do
     @output_buffer = ''
     @book = Book.new
-    concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
   end
 
   test '#text_field outputs a div with Bootstrap-friendly styling' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
     assert_match %r{<div class="clearfix" id="book_title_input">}, output_buffer
   end
 
   test '#text_field outputs a label tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
     assert_match %r{<label for="book_title">Title</label>}, output_buffer
   end
 
   test '#text_field outputs an input tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
     assert_match %r{<div class="input"><input id="book_title" name="book\[title\]" size="30" type="text" /></div>}, output_buffer
+  end
+
+  test '#collection_select outputs a div with Bootstrap-friendly styling' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
+    assert_match %r{<div class="clearfix" id="book_author_id_input">}, output_buffer
+  end
+
+  test '#collection_select outputs a label tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
+    assert_match %r{<label for="book_author_id">Author</label>}, output_buffer
+  end
+
+  test '#collection_select outputs a select tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
+    assert_match %r{<div class="input"><select id="book_author_id" name="book\[author_id\]"></select></div>}, output_buffer
   end
 end

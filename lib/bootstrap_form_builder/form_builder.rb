@@ -9,7 +9,7 @@ module BootstrapFormBuilder
     def collection_select(attribute, collection, value_method, text_method, options = {})
       select_tag = super
       label_tag = label(attribute, options.delete(:label))
-      field(attribute, input_tag, label_tag)
+      field(attribute, select_tag, label_tag)
     end
 
     def commit(options = {})
