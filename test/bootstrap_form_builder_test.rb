@@ -53,4 +53,19 @@ class BootstrapFormBuilderTest < ActiveSupport::TestCase
     concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
     assert_match %r{<div class="input"><select id="book_author_id" name="book\[author_id\]"></select></div>}, output_buffer
   end
+
+  test '#submit outputs a div with Bootstrap-friendly styling' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.submit) })
+    assert_match %r{<div class="actions">}, output_buffer
+  end
+
+  test '#submit outputs a submit button' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.submit) })
+    assert_match %r{<input class="btn" name="commit" type="submit" value="Create Book" />}, output_buffer
+  end
+
+  test '#submit applies provided class to button' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.submit(nil, class: 'primary')) })
+    assert_match %r{<input class="btn primary" .* />}, output_buffer
+  end
 end

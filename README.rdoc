@@ -11,7 +11,7 @@ The builder conforms generally to the generic Rails form builder API.
   <%= bootstrap_form_for @widget do |f| %>
     <%= f.text_field :name %>
     <%= f.collection_select :category_id, Category.all, :id, :name, include_blank: true %>
-    <%= f.commit class: 'primary' %>
+    <%= f.submit class: 'primary' %>
   <% end %>
 
 Labels are automatically created for the field. The label and the input

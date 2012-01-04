@@ -3,5 +3,5 @@
   <%= book.fields_for :author do |author| %>
     <%= author.text_field :name, label: 'Author' %>
   <% end %>
-  <%= book.commit %>
+  <%= book.submit %>
 <% end %>

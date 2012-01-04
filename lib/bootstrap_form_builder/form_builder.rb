@@ -12,11 +12,10 @@ module BootstrapFormBuilder
       field(attribute, select_tag, label_tag)
     end
 
-    def commit(options = {})
-      options[:class] = options[:class] ? "#{options[:class]} btn" : 'btn'
-      text = "#{object.new_record? ? 'Create' : 'Update'} #{object.class.model_name.humanize}"
+    def submit(value = nil, options = {})
+      button_class = ['btn', *options.delete(:class)].join(' ')
       template.content_tag :div, class: 'actions' do
-        submit(text, options)
+        super(value, options.merge(class: button_class))
       end
     end
 
