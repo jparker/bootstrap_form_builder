@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class BootstrapFormBuilderTest < ActiveSupport::TestCase
+class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
   include ActionView::Helpers
   include BootstrapFormBuilder::Helpers
 
@@ -12,7 +12,7 @@ class BootstrapFormBuilderTest < ActiveSupport::TestCase
     extend ActiveModel::Naming
     include ActiveModel::Conversion
 
-    attr_accessor :author_id, :title
+    attr_accessor :author_id, :title, :passphrase
 
     def persisted?() end
   end
@@ -37,6 +37,21 @@ class BootstrapFormBuilderTest < ActiveSupport::TestCase
   test '#text_field outputs an input tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
     assert_match %r{<div class="input"><input id="book_title" name="book\[title\]" size="30" type="text" /></div>}, output_buffer
+  end
+
+  test '#password_field outputs a div with Bootstrap-friendly styling' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.password_field(:passphrase)) })
+    assert_match %r{<div class="clearfix" id="book_passphrase_input">}, output_buffer
+  end
+
+  test '#password_field outputs a label tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.password_field(:passphrase)) })
+    assert_match %r{<label for="book_passphrase">Passphrase</label>}, output_buffer
+  end
+
+  test '#password_field outputs an input tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.password_field(:passphrase)) })
+    assert_match %r{<div class="input"><input id="book_passphrase" name="book\[passphrase\]" size="30" type="password" /></div>}, output_buffer
   end
 
   test '#collection_select outputs a div with Bootstrap-friendly styling' do

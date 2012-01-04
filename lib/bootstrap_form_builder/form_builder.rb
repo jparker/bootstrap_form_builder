@@ -6,6 +6,12 @@ module BootstrapFormBuilder
       field(attribute, input_tag, label_tag)
     end
 
+    def password_field(attribute, options = {}, &block)
+      input_tag = block_given? ? template.capture(super, &block) : super
+      label_tag = label(attribute, options.delete(:label))
+      field(attribute, input_tag, label_tag)
+    end
+
     def collection_select(attribute, collection, value_method, text_method, options = {})
       select_tag = super
       label_tag = label(attribute, options.delete(:label))
