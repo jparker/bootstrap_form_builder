@@ -1,3 +1,9 @@
 = BootstrapFormBuilder
 
-This project rocks and uses MIT-LICENSE.
+A Rails form builder that outputs forms structured for use with the
+Twitter Bootstrap library. Labels are automatically created, and errors
+are displayed inline.
+
+= More information
+
+http://twitter.github.com/bootstrap
