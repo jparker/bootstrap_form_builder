@@ -1,0 +1,7 @@
+<%= bootstrap_form_for @book do |book| %>
+  <%= book.text_field :title %>
+  <%= book.fields_for :author do |author| %>
+    <%= author.text_field :name, label: 'Author' %>
+  <% end %>
+  <%= book.commit %>
+<% end %>
