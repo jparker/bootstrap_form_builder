@@ -71,7 +71,7 @@ class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
 
   test '#submit outputs a div with Bootstrap-friendly styling' do
     concat(bootstrap_form_for(@book) { |f| concat(f.submit) })
-    assert_match %r{<div class="actions">}, output_buffer
+    assert_match %r{<div class="clearfix"><div class="actions">}, output_buffer
   end
 
   test '#submit outputs a submit button' do

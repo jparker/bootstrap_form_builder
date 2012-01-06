@@ -20,8 +20,10 @@ module BootstrapFormBuilder
 
     def submit(value = nil, options = {})
       button_class = ['btn', *options.delete(:class)].join(' ')
-      template.content_tag :div, class: 'actions' do
-        super(value, options.merge(class: button_class))
+      template.content_tag :div, class: 'clearfix' do
+        template.content_tag :div, class: 'actions' do
+          super(value, options.merge(class: button_class))
+        end
       end
     end
 
