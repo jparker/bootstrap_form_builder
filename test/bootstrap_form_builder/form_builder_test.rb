@@ -24,63 +24,78 @@ class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
     @book = Book.new
   end
 
-  test '#text_field outputs a div with Bootstrap-friendly styling' do
+  test '#text_field outputs a clearfix div' do
     concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
-    assert_match %r{<div class="clearfix" id="book_title_input">}, output_buffer
+    assert_match output_buffer, %r{<div class="clearfix" id="book_title_input">}
   end
 
   test '#text_field outputs a label tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
-    assert_match %r{<label for="book_title">Title</label>}, output_buffer
+    assert_match output_buffer, %r{<label for="book_title">Title</label>}
   end
 
   test '#text_field outputs an input tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
-    assert_match %r{<div class="input"><input id="book_title" name="book\[title\]" size="30" type="text" /></div>}, output_buffer
+    assert_match output_buffer, %r{<div class="input"><input id="book_title" name="book\[title\]" size="30" type="text" /></div>}
   end
 
-  test '#password_field outputs a div with Bootstrap-friendly styling' do
+  test '#password_field outputs a clearfix div' do
     concat(bootstrap_form_for(@book) { |f| concat(f.password_field(:passphrase)) })
-    assert_match %r{<div class="clearfix" id="book_passphrase_input">}, output_buffer
+    assert_match output_buffer, %r{<div class="clearfix" id="book_passphrase_input">}
   end
 
   test '#password_field outputs a label tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.password_field(:passphrase)) })
-    assert_match %r{<label for="book_passphrase">Passphrase</label>}, output_buffer
+    assert_match output_buffer, %r{<label for="book_passphrase">Passphrase</label>}
   end
 
   test '#password_field outputs an input tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.password_field(:passphrase)) })
-    assert_match %r{<div class="input"><input id="book_passphrase" name="book\[passphrase\]" size="30" type="password" /></div>}, output_buffer
+    assert_match output_buffer, %r{<div class="input"><input id="book_passphrase" name="book\[passphrase\]" size="30" type="password" /></div>}
   end
 
-  test '#collection_select outputs a div with Bootstrap-friendly styling' do
+  test '#collection_select outputs a clearfix div' do
     concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
-    assert_match %r{<div class="clearfix" id="book_author_id_input">}, output_buffer
+    assert_match output_buffer, %r{<div class="clearfix" id="book_author_id_input">}
   end
 
   test '#collection_select outputs a label tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
-    assert_match %r{<label for="book_author_id">Author</label>}, output_buffer
+    assert_match output_buffer, %r{<label for="book_author_id">Author</label>}
   end
 
   test '#collection_select outputs a select tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
-    assert_match %r{<div class="input"><select id="book_author_id" name="book\[author_id\]"></select></div>}, output_buffer
+    assert_match output_buffer, %r{<div class="input"><select id="book_author_id" name="book\[author_id\]"></select></div>}
   end
 
-  test '#submit outputs a div with Bootstrap-friendly styling' do
+  test '#submit outputs a clearfix div' do
     concat(bootstrap_form_for(@book) { |f| concat(f.submit) })
-    assert_match %r{<div class="clearfix"><div class="actions">}, output_buffer
+    assert_match output_buffer, %r{<div class="clearfix"><div class="actions">}
   end
 
   test '#submit outputs a submit button' do
     concat(bootstrap_form_for(@book) { |f| concat(f.submit) })
-    assert_match %r{<input class="btn" name="commit" type="submit" value="Create Book" />}, output_buffer
+    assert_match output_buffer, %r{<input class="btn" name="commit" type="submit" value="Create Book" />}
   end
 
   test '#submit applies provided class to button' do
     concat(bootstrap_form_for(@book) { |f| concat(f.submit(nil, class: 'primary')) })
-    assert_match %r{<input class="btn primary" .* />}, output_buffer
+    assert_match output_buffer, %r{<input class="btn primary" .* />}
+  end
+
+  test '#uneditable_field outputs a clearfix div' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.uneditable_field(:title)) })
+    assert_match output_buffer, %r{<div class="clearfix" id="book_title_input">}
+  end
+
+  test '#uneditable_field outputs a label tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.uneditable_field(:title)) })
+    assert_match output_buffer, %r{<label for="book_title">Title</label>}
+  end
+
+  test '#uneditable_field outputs a span tag with class uneditable-input' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.uneditable_field(:title)) })
+    assert_match output_buffer, %r{<div class="input"><span class="uneditable-input" id="book_title"></span></div>}
   end
 end

@@ -18,6 +18,12 @@ module BootstrapFormBuilder
       field(attribute, select_tag, label_tag)
     end
 
+    def uneditable_field(attribute, options = {})
+      span_tag = template.content_tag(:span, object.send(attribute), class: 'uneditable-input', id: "#{object.class.model_name.underscore}_#{attribute}")
+      label_tag = label(attribute, options.delete(:label))
+      field(attribute, span_tag, label_tag)
+    end
+
     def submit(value = nil, options = {})
       button_class = ['btn', *options.delete(:class)].join(' ')
       template.content_tag :div, class: 'clearfix' do
