@@ -25,6 +25,11 @@ module BootstrapFormBuilder
     end
 
     def submit(value = nil, options = {})
+      # This version of #submit differs slightly from the ActionView version in that
+      # the model name is titleized to maintain consistent capitalization, e.g., for
+      # a model named QuoteRequest the button label is "Create Quote Request" rather
+      # than "Create Quote request".
+      value ||= "#{object.new_record? ? 'Create' : 'Update'} #{object.class.model_name.titleize}"
       button_class = ['btn', *options.delete(:class)].join(' ')
       template.content_tag :div, class: 'clearfix' do
         template.content_tag :div, class: 'actions' do
