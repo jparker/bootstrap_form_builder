@@ -2,26 +2,22 @@ module BootstrapFormBuilder
   class FormBuilder < ActionView::Helpers::FormBuilder
     def text_field(attribute, options = {}, &block)
       input_tag = block_given? ? template.capture(super, &block) : super
-      label_tag = label(attribute, options.delete(:label))
-      field(attribute, input_tag, label_tag)
+      field(input_tag, attribute, options)
     end
 
     def password_field(attribute, options = {}, &block)
       input_tag = block_given? ? template.capture(super, &block) : super
-      label_tag = label(attribute, options.delete(:label))
-      field(attribute, input_tag, label_tag)
+      field(input_tag, attribute, options)
     end
 
     def collection_select(attribute, collection, value_method, text_method, options = {})
       select_tag = super
-      label_tag = label(attribute, options.delete(:label))
-      field(attribute, select_tag, label_tag)
+      field(select_tag, attribute, options)
     end
 
     def uneditable_field(attribute, options = {})
       span_tag = template.content_tag(:span, object.send(attribute), class: 'uneditable-input', id: "#{object.class.model_name.underscore}_#{attribute}")
-      label_tag = label(attribute, options.delete(:label))
-      field(attribute, span_tag, label_tag)
+      field(span_tag, attribute, options)
     end
 
     def submit(value = nil, options = {})
@@ -38,14 +34,17 @@ module BootstrapFormBuilder
       end
     end
 
-    def field(attribute, input_tag, label_tag)
+    def field(input_tag, attribute, options)
       errors = object.errors[attribute].uniq.to_sentence
       outer_class = errors.blank? ? 'clearfix' : 'clearfix error'
       inner_class = errors.blank? ? 'input' : 'input error'
 
       template.content_tag(:div, id: "#{object.class.model_name.underscore}_#{attribute}_input", class: outer_class) do
-        label_tag << template.content_tag(:div, class: inner_class) do
-          errors.blank? ? input_tag : input_tag << template.content_tag(:span, errors, class: 'help-inline')
+        label(attribute, options[:label]) << template.content_tag(:div, class: inner_class) do
+          input_div = input_tag
+          input_div << template.content_tag(:span, options[:hint], class: 'help-block') if options[:hint]
+          input_div << template.content_tag(:span, errors, class: 'help-inline') if errors.present?
+          input_div
         end
       end
     end

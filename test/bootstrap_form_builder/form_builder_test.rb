@@ -39,6 +39,19 @@ class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
     assert_match output_buffer, %r{<div class="input"><input id="book_title" name="book\[title\]" size="30" type="text" /></div>}
   end
 
+  test '#text_field with hint option outputs a help block' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title, hint: 'The Hobbit')) })
+    assert_match output_buffer, %r{<span class="help-block">The Hobbit</span>}
+  end
+
+  test '#text_field with errors wraps field in error class' do
+    @book.errors.stubs(:[]).returns(["can't be blank"])
+    concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
+    assert_match output_buffer, %r{<div class="clearfix error" id="book_title_input">}
+    assert_match output_buffer, %r{<div class="input error">}
+    assert_match output_buffer, %r{<span class="help-inline">can't be blank</span>}
+  end
+
   test '#password_field outputs a clearfix div' do
     concat(bootstrap_form_for(@book) { |f| concat(f.password_field(:passphrase)) })
     assert_match output_buffer, %r{<div class="clearfix" id="book_passphrase_input">}
