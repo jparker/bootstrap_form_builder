@@ -67,6 +67,21 @@ class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
     assert_match output_buffer, %r{<div class="input"><input id="book_passphrase" name="book\[passphrase\]" size="30" type="password" /></div>}
   end
 
+  test '#file_field outputs a clearfix div' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.file_field(:attachment)) })
+    assert_match output_buffer, %r{<div class="clearfix" id="book_attachment_input">}
+  end
+
+  test '#file_field outputs a label tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.file_field(:attachment)) })
+    assert_match output_buffer, %r{<label for="book_attachment">Attachment</label>}
+  end
+
+  test '#file_field outputs an input tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.file_field(:attachment)) })
+    assert_match output_buffer, %r{<div class="input"><input id="book_attachment" name="book\[attachment\]" type="file" /></div>}
+  end
+
   test '#collection_select outputs a clearfix div' do
     concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
     assert_match output_buffer, %r{<div class="clearfix" id="book_author_id_input">}

@@ -10,6 +10,11 @@ module BootstrapFormBuilder
       field(input_tag, attribute, options)
     end
 
+    def file_field(attribute, options = {}, &block)
+      input_tag = block_given? ? template.capture(super, &block) : super
+      field(input_tag, attribute, options)
+    end
+
     def collection_select(attribute, collection, value_method, text_method, options = {})
       select_tag = super
       field(select_tag, attribute, options)
