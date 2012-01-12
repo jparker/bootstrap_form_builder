@@ -7,8 +7,8 @@ class BootstrapFormBuilder::HelpersTest < ActionView::TestCase
   end
 
   test '#bootstrap_form_for passes other options through to form_for' do
-    view.expects(:form_for).with(anything, has_entries(builder: BootstrapFormBuilder::FormBuilder, method: :put))
-    view.bootstrap_form_for(stub_everything, method: :put) {}
+    view.expects(:form_for).with(anything, has_entries(builder: BootstrapFormBuilder::FormBuilder, method: :put, html: {multipart: true}))
+    view.bootstrap_form_for(stub_everything, method: :put, html: {multipart: true}) {}
   end
 
   test '#bootstrap_fields_for calls fields_for with a builder option' do
