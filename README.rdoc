@@ -4,6 +4,9 @@ A Rails form builder that outputs forms structured for use with the
 Twitter Bootstrap library. Labels are automatically created, and errors
 are displayed inline.
 
+BootstrapFormBuilder is built using syntax specific to Ruby 1.9. It
+will not work on Ruby 1.8.
+
 = Usage
 
 The builder conforms generally to the generic Rails form builder API.
