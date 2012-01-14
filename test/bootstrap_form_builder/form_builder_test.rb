@@ -12,7 +12,7 @@ class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
     extend ActiveModel::Naming
     include ActiveModel::Conversion
 
-    attr_accessor :author_id, :title, :passphrase
+    attr_accessor :author_id, :title, :passphrase, :time_zone
 
     def persisted?() end
   end
@@ -95,6 +95,21 @@ class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
   test '#collection_select outputs a select tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.collection_select(:author_id, [], :id, :name)) })
     assert_match output_buffer, %r{<div class="input"><select id="book_author_id" name="book\[author_id\]"></select></div>}
+  end
+
+  test '#time_zone_select outputs a clearfix div' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.time_zone_select(:time_zone)) })
+    assert_match output_buffer, %r{<div class="clearfix" id="book_time_zone_input">}
+  end
+
+  test '#time_zone_select outputs a label tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.time_zone_select(:time_zone)) })
+    assert_match output_buffer, %r{<label for="book_time_zone">Time zone</label>}
+  end
+
+  test '#time_zone_select outputs a select tag' do
+    concat(bootstrap_form_for(@book) { |f| concat(f.time_zone_select(:time_zone)) })
+    assert_match output_buffer, %r{<div class="input"><select id="book_time_zone" name="book\[time_zone\]">(?:<option value=".*">.*</option>\n?)+</select></div>}
   end
 
   test '#submit outputs a clearfix div' do

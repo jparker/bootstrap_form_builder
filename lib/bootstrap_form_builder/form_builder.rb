@@ -15,7 +15,12 @@ module BootstrapFormBuilder
       field(input_tag, attribute, options)
     end
 
-    def collection_select(attribute, collection, value_method, text_method, options = {})
+    def collection_select(attribute, collection, value_method, text_method, options = {}, html_options = {})
+      select_tag = super
+      field(select_tag, attribute, options)
+    end
+
+    def time_zone_select(attribute, priority_zones = nil, options = {}, html_options = {})
       select_tag = super
       field(select_tag, attribute, options)
     end
