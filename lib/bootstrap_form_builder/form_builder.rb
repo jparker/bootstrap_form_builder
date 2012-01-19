@@ -62,7 +62,7 @@ module BootstrapFormBuilder
           input_div << content_tag(:span, options[:hint], class: 'help-block') if options[:hint]
           input_div << content_tag(:span, errors, class: 'help-inline') if errors.present?
           input_div
-        end
+        end.html_safe
       end
     end
 
