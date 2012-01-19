@@ -52,7 +52,12 @@ module BootstrapFormBuilder
       inner_class = errors.blank? ? 'input' : 'input error'
 
       content_tag(:div, id: "#{object.class.model_name.underscore}_#{attribute}_input", class: outer_class) do
-        label(attribute, options[:label]) << content_tag(:div, class: inner_class) do
+        label_tag = if options.has_key?(:label)
+                      options[:label] ? label(attribute, options[:label]) : ''
+                    else
+                      label(attribute)
+                    end
+        label_tag << content_tag(:div, class: inner_class) do
           input_div = input_tag
           input_div << content_tag(:span, options[:hint], class: 'help-block') if options[:hint]
           input_div << content_tag(:span, errors, class: 'help-inline') if errors.present?
