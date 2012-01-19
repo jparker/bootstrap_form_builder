@@ -34,11 +34,6 @@ class BootstrapFormBuilder::FormBuilderTest < ActiveSupport::TestCase
     assert_match output_buffer, %r{<label for="book_title">Title</label>}
   end
 
-  test '#text_field omits label tag when label option is false' do
-    concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title, label: false)) })
-    assert_no_match %r{<label for="book_title">Title</label>}, output_buffer
-  end
-
   test '#text_field outputs an input tag' do
     concat(bootstrap_form_for(@book) { |f| concat(f.text_field(:title)) })
     assert_match output_buffer, %r{<div class="input"><input id="book_title" name="book\[title\]" size="30" type="text" /></div>}
