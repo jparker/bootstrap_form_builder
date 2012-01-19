@@ -26,7 +26,9 @@ module BootstrapFormBuilder
     end
 
     def uneditable_field(attribute, options = {})
-      span_tag = content_tag(:span, object.send(attribute), class: 'uneditable-input', id: "#{object.class.model_name.underscore}_#{attribute}")
+      options[:class] = options[:class] ? "#{options[:class]} uneditable-input" : 'uneditable-input'
+      options[:id] = "#{object.class.model_name.underscore}_#{attribute}"
+      span_tag = content_tag(:span, object.send(attribute), options)
       field(span_tag, attribute, options)
     end
 
