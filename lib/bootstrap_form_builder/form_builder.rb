@@ -20,6 +20,11 @@ module BootstrapFormBuilder
       field(select_tag, attribute, options)
     end
 
+    def select(attribute, choices, options = {}, html_options = {}, &block)
+      select_tag = super
+      field(select_tag, attribute, options)
+    end
+
     def time_zone_select(attribute, priority_zones = nil, options = {}, html_options = {})
       select_tag = super
       field(select_tag, attribute, options)
