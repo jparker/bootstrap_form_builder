@@ -37,3 +37,11 @@ select tag. This can be used to decorate the input fields.
 = More information
 
 http://twitter.github.com/bootstrap
+
+= TODO
+
+* Support label: false option to exclude label
+* Support inline placement of form helpers
+* Add new helper that calls #submit(nil, ...)
+* Refactor tests to be less brittle (don't use asset_match and regexps)
+* Get testing preamble setup for Trafis CI
